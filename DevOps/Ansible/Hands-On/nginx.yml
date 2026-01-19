@@ -1,0 +1,24 @@
+- name: Installation et configuration de Nginx sur les serveurs web
+  hosts: webservers
+  become: true
+
+  tasks:
+    - name: Installer nginx
+      apt:
+        name: nginx
+        state: present
+        update_cache: true
+
+    - name: Déployer la page index personnalisée
+      template:
+        src: templates/index.html.j2
+        dest: /var/www/html/index.html
+        owner: www-data
+        group: www-data
+        mode: '0644'
+
+    - name: S'assurer que nginx est démarré et activé
+      service:
+        name: nginx
+        state: started
+        enabled: true

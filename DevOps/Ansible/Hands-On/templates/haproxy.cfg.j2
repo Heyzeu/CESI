@@ -1,0 +1,22 @@
+global
+    log /dev/log local0
+    log /dev/log local1 notice
+    daemon
+
+defaults
+    log     global
+    mode    http
+    option  httplog
+    option  dontlognull
+    timeout connect 5000
+    timeout client  50000
+    timeout server  50000
+
+frontend http_front
+    bind *:80
+    default_backend webservers_backend
+
+backend webservers_backend
+{% for host in groups['webservers'] %}
+    server {{ host }} {{ host }}:80 check
+{% endfor %}

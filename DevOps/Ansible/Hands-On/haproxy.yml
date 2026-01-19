@@ -1,0 +1,25 @@
+---
+- name: Installation et configuration de HAProxy
+  hosts: lb
+  become: true
+
+  tasks:
+    - name: Installer haproxy
+      apt:
+        name: haproxy
+        state: present
+        update_cache: true
+
+    - name: Déployer la configuration HAProxy
+      template:
+        src: templates/haproxy.cfg.j2
+        dest: /etc/haproxy/haproxy.cfg
+        owner: root
+        group: root
+        mode: '0644'
+
+    - name: Redémarrer haproxy pour appliquer la configuration
+      service:
+        name: haproxy
+        state: restarted
+        enabled: true
