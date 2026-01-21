@@ -42,7 +42,7 @@ docker push franeka/cloudmemo:v1.0
 
 ### 3️⃣ Déploiement Kubernetes
 
-Sur le Master Ubuntu, appliquez les manifestes dans cet ordre :
+Sur le Master, appliquez les manifestes dans cet ordre avec le user k8s :
 
 ```bash
 cd ~/SysOps/ansible/cloudmemo-k8s
